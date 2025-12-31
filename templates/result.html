@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Prediction Result</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .yes {
+            color: red;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .no {
+            color: green;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        a {
+            display: block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Loan Default Prediction</h2>
+
+    {% if result == "YES" %}
+        <div class="yes">YES</div>
+    {% else %}
+        <div class="no">NO</div>
+    {% endif %}
+
+    <p>{{ message }}</p>
+    <p><b>Confidence:</b> {{ probability }}%</p>
+
+    <a href="/">🔙 Check Another Applicant</a>
+</div>
+
+</body>
+</html>
