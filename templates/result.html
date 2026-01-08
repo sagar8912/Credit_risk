@@ -1,64 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Prediction Result</title>
+<title>Prediction Result</title>
 
-    <style>
-        body {
-            font-family: Arial;
-            background: #f4f6f8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+<style>
+body {
+    margin: 0;
+    font-family: "Inter", Arial;
+    background: linear-gradient(135deg,#141e30,#243b55);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-        .box {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            width: 400px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
+.card {
+    background: white;
+    padding: 40px;
+    width: 420px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.35);
+}
 
-        .yes {
-            color: red;
-            font-size: 32px;
-            font-weight: bold;
-        }
+.high {
+    color: #c0392b;
+    font-size: 36px;
+    font-weight: bold;
+}
 
-        .no {
-            color: green;
-            font-size: 32px;
-            font-weight: bold;
-        }
+.low {
+    color: #27ae60;
+    font-size: 36px;
+    font-weight: bold;
+}
 
-        a {
-            display: block;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #007bff;
-        }
-    </style>
+a {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 24px;
+    background: #243b55;
+    color: white;
+    border-radius: 12px;
+    text-decoration: none;
+}
+</style>
 </head>
 
 <body>
 
-<div class="box">
-    <h2>Loan Default Prediction</h2>
+<div class="card">
+<h2>📊 Credit Risk Result</h2>
 
-    {% if result == "YES" %}
-        <div class="yes">YES</div>
-    {% else %}
-        <div class="no">NO</div>
-    {% endif %}
+{% if "HIGH" in result %}
+<div class="high">HIGH RISK</div>
+{% else %}
+<div class="low">LOW RISK</div>
+{% endif %}
 
-    <p>{{ message }}</p>
-    <p><b>Confidence:</b> {{ probability }}%</p>
+<p>{{ message }}</p>
+<p><b>Confidence:</b> {{ probability }}%</p>
 
-    <a href="/">🔙 Check Another Applicant</a>
+<a href="/">🔙 New Prediction</a>
 </div>
 
 </body>
 </html>
+

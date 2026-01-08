@@ -1,112 +1,249 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Credit Risk Prediction</title>
+<meta charset="UTF-8">
+<title>Credit Risk Prediction</title>
 
-    <style>
-        body {
-            background-image: url("/static/Credit-Risk-in-Business-Loans.jpg");
-            background-size: cover;
-            font-family: Arial;
-        }
-        .box {
-            background: rgba(255,255,255,0.95);
-            width: 520px;
-            margin: 40px auto;
-            padding: 25px;
-            border-radius: 10px;
-        }
-        input, select, button {
-            width: 100%;
-            padding: 8px;
-            margin-top: 8px;
-        }
-        button {
-            background: #007bff;
-            color: white;
-            font-size: 16px;
-            border: none;
-        }
-        h2 {
-            text-align: center;
-        }
-        .result {
-            text-align: center;
-            font-size: 20px;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-    </style>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+}
+
+.glass {
+    width: 1000px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(14px);
+    border-radius: 18px;
+    padding: 35px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+    color: #fff;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.header h1 {
+    font-weight: 600;
+}
+
+.header p {
+    opacity: 0.85;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+input, select {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.9);
+    font-size: 14px;
+}
+
+label {
+    font-size: 13px;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    margin-top: 30px;
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, #00c6ff, #0072ff);
+    color: white;
+    font-weight: 500;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,114,255,0.5);
+}
+
+.result-box {
+    margin-top: 30px;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: 600;
+}
+
+.high {
+    background: rgba(255, 0, 0, 0.2);
+    color: #ff4d4d;
+}
+
+.low {
+    background: rgba(0, 255, 128, 0.2);
+    color: #00ff99;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 13px;
+    opacity: 0.8;
+}
+</style>
 </head>
 
 <body>
-<div class="box">
-    <h2>Credit Risk Predictor</h2>
 
-    <form action="/predict" method="post">
+<div class="glass">
 
-        <input type="number" name="person_age" min="18" max="70" placeholder="Age" required>
-
-        <select name="person_gender" required>
-            <option value="">Gender</option>
-            <option value="1">Male</option>
-            <option value="0">Female</option>
-        </select>
-
-        <input type="number" name="person_income" min="10000" placeholder="Annual Income" required>
-
-        <input type="number" name="person_emp_exp" min="0" max="40" placeholder="Employment Experience (Years)" required>
-
-        <input type="number" name="loan_amnt" min="500" placeholder="Loan Amount" required>
-
-        <input type="number" step="0.01" min="5" max="35" name="loan_int_rate" placeholder="Interest Rate (%)" required>
-
-        <input type="number" step="0.01" min="0" max="1" name="loan_percent_income" placeholder="Loan % of Income (0–1)" required>
-
-        <input type="number" min="0" max="40" name="credit_history" placeholder="Credit History Length (Years)" required>
-
-        <input type="number" min="300" max="850" name="credit_score" placeholder="Credit Score" required>
-
-        <select name="previous_default" required>
-            <option value="">Previous Loan Default?</option>
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-        </select>
-
-        <select name="education" required>
-            <option value="">Education</option>
-            <option value="High School">High School</option>
-            <option value="Associate">Associate</option>
-            <option value="Bachelor">Bachelor</option>
-            <option value="Master">Master</option>
-            <option value="Doctorate">Doctorate</option>
-        </select>
-
-        <select name="home_ownership" required>
-            <option value="">Home Ownership</option>
-            <option value="RENT">Rent</option>
-            <option value="OWN">Own</option>
-            <option value="MORTGAGE">Mortgage</option>
-            <option value="OTHER">Other</option>
-        </select>
-
-        <select name="loan_intent" required>
-            <option value="">Loan Purpose</option>
-            <option value="DEBTCONSOLIDATION">Debt Consolidation</option>
-            <option value="EDUCATION">Education</option>
-            <option value="HOMEIMPROVEMENT">Home Improvement</option>
-            <option value="MEDICAL">Medical</option>
-            <option value="PERSONAL">Personal</option>
-            <option value="VENTURE">Business Venture</option>
-        </select>
-
-        <button type="submit">Predict Credit Risk</button>
-    </form>
-
-    {% if prediction %}
-        <div class="result">{{ prediction }}</div>
-    {% endif %}
+<div class="header">
+    <h1><i class="fa-solid fa-chart-line"></i> Credit Risk Prediction</h1>
+    <p>AI-powered loan default assessment</p>
 </div>
+
+<form action="/predict" method="post">
+
+<div class="form-grid">
+
+<div class="field">
+<label>Age</label>
+<input name="person_age" required>
+</div>
+
+<div class="field">
+<label>Gender</label>
+<select name="person_gender">
+<option value="1">Male</option>
+<option value="0">Female</option>
+</select>
+</div>
+
+<div class="field">
+<label>Annual Income</label>
+<input name="person_income" required>
+</div>
+
+<div class="field">
+<label>Experience (Years)</label>
+<input name="person_emp_exp" required>
+</div>
+
+<div class="field">
+<label>Loan Amount</label>
+<input name="loan_amnt" required>
+</div>
+
+<div class="field">
+<label>Interest Rate (%)</label>
+<input name="loan_int_rate" required>
+</div>
+
+<div class="field">
+<label>Loan % of Income</label>
+<input name="loan_percent_income" required>
+</div>
+
+<div class="field">
+<label>Credit History Length</label>
+<input name="credit_history" required>
+</div>
+
+<div class="field">
+<label>Credit Score</label>
+<input name="credit_score" required>
+</div>
+
+<div class="field">
+<label>Previous Default</label>
+<select name="previous_default">
+<option value="0">No</option>
+<option value="1">Yes</option>
+</select>
+</div>
+
+<div class="field">
+<label>Education</label>
+<select name="education">
+<option>Bachelor</option>
+<option>Master</option>
+<option>High School</option>
+<option>Associate</option>
+<option>Doctorate</option>
+</select>
+</div>
+
+<div class="field">
+<label>Home Ownership</label>
+<select name="home_ownership">
+<option>RENT</option>
+<option>OWN</option>
+<option>MORTGAGE</option>
+<option>OTHER</option>
+</select>
+</div>
+
+<div class="field">
+<label>Loan Purpose</label>
+<select name="loan_intent">
+<option>PERSONAL</option>
+<option>EDUCATION</option>
+<option>MEDICAL</option>
+<option>VENTURE</option>
+<option>DEBTCONSOLIDATION</option>
+<option>HOMEIMPROVEMENT</option>
+</select>
+</div>
+
+</div>
+
+<button type="submit">
+<i class="fa-solid fa-magnifying-glass-chart"></i> Predict Credit Risk
+</button>
+
+</form>
+
+{% if prediction %}
+<div class="result-box {{ 'high' if 'HIGH' in prediction else 'low' }}">
+{{ prediction }}
+</div>
+{% endif %}
+
+<div class="footer">
+© 2026 | Credit Risk ML System | Deployed on Azure
+</div>
+
+</div>
+
 </body>
 </html>
+
+
+
+
 
